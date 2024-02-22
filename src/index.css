@@ -1,13 +1,83 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: 'frisky';
+    src:  url('../public/Friskypuppy.woff') format('woff');
+          
+  }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer components {
+    .sized{
+        width: 100vw;
+        height: 100vh;
+    }
+    .backgrounds{
+      background-image: url('./assets/background.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+    .flexed{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .frisky{
+        @apply text-5xl text-center;
+        font-family: frisky;
+        color: white;
+        -webkit-text-stroke: 2px black;
+    }
+    .inverted{
+        direction: rtl;
+    }
+    .filtered{
+        background-color: rgba(255, 255, 255, 0.134);
+        backdrop-filter: blur(6px);
+        transition: 1s;
+    }
+    .filtered:hover{
+        
+        animation: blurmanipulation 5s infinite linear;
+        -webkit-animation: blurmanipulation 5s infinite linear;
+        
+}
+    @keyframes blurmanipulation {
+        0%{
+            backdrop-filter: blur(6px);
+        }
+        25%{
+            backdrop-filter: blur(1px);
+        }
+        75%{
+            backdrop-filter: blur(4px);
+        }
+        100%{
+            backdrop-filter: blur(6px);
+        }
+    }
+    .mainmenu_gamename p{
+        font-size: 40px;
+        font-family: frisky;
+        color: white;
+    }
+    
+    .uibtn{
+        width: 200px;
+        height: 50px;
+        font-size: 30px;
+        background-color: rgb(242, 48, 48);
+        border-radius: 20px;
+        border: 2px solid white;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+        color: white;
+        -webkit-text-stroke: 2px black;
+    }
+    .uibtn:hover{
+        background-color: rgb(0, 255, 13);
+    }
+
 }
