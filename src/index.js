@@ -6,7 +6,7 @@ import io from 'socket.io-client'
 import Bypass from './pages/Bypass'
 
 
-const soc = io.connect("http://localhost:8000");
+const soc = io.connect("https://rockservers.vercel.app");
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
