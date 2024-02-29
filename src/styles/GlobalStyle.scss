@@ -2,6 +2,9 @@
     animation: 1s infinite linear buttonanimation;
     -webkit-animation: 0.5s infinite linear buttonanimation;
 }
+.hovering:hover{
+    background-color: aqua;
+}
 
 @keyframes buttonanimation {
     0%{

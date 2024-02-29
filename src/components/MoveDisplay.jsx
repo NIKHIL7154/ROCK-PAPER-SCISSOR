@@ -1,35 +1,38 @@
-import React, { useContext, useEffect, useRef } from 'react'
-import Left_Paper from '../assets/Left_Paper.png'
-import Left_Rock from '../assets/Left_Thumb.png'
-import Left_Scissor from '../assets/Left_Scissor.png'
-import Right_Paper from '../assets/Right_Paper.png'
-import Right_Rock from '../assets/Right_Rock.png'
-import Right_Scissor from '../assets/Right_Scissor.png'
-import Gamestarted from '../Helpers/Contexts'
 
-import gsap from "gsap";
+import { useContext, useEffect, useRef } from 'react';
+import { GameData, Gamestarted, Opponentturn, Playerturn } from '../Helpers/Contexts'
+import ShowMove from './ShowMove';
+import Serverconnect from '../Helpers/Socketconfig';
+import { PlayerSelected, setOpp } from '../Helpers/RuntimeVars';
 
 
-const MoveDisplay = (props) => {
-    const { image_to_show } = props;
-    const { align } = props;
-    const Images_object = { Left_Paper, Left_Rock, Left_Scissor, Right_Paper, Right_Rock, Right_Scissor }
-    const Move_ref = useRef();
-    const Game_info = useContext(Gamestarted)
+const MoveDisplay = () => {
+    const io = useContext(Serverconnect);
+    const Player_move = useContext(Playerturn);
+    const Opponent_move = useContext(Opponentturn);
+    const Game_status = useContext(Gamestarted)
+    const Game_begin = useContext(GameData)
+    const Oppstatus = useRef('')
+
     useEffect(() => {
-        if(image_to_show.includes('Left')){
-        gsap.fromTo(Move_ref.current,0.2,{css:{rotate:-10}},{css:{rotate:10},repeat:4,yoyo:true})
-        }else{
-            gsap.fromTo(Move_ref.current,0.2,{css:{rotate:10}},{css:{rotate:-10},repeat:4,yoyo:true})
-        }
-    }, [Game_info]);
+        io.on('Movebyopp', (move) => {
+            if(Oppstatus.current!==null){
+            Oppstatus.current.innerHTML = 'Opponent✅<br> Waiting for you..'}
+            setOpp("Right_" + move)
+            if (PlayerSelected !== 'not') {
+                Game_status[1](true)
+                Game_begin[1](true)
+            }
+        })
+    }, [Game_begin,Game_status,io]);
 
     return (
-        <div className={`w-[50%] h-full flex justify-${align} items-center overflow-hidden`}>
-            <div className=' '>
-                <img ref={Move_ref} className='' src={Images_object[image_to_show]} alt="" />
+        <div className={`w-[100%] h-full flex items-center justify-start overflow-hidden`}>
+            <ShowMove imgshow={Player_move[0]} align={'start'} />
 
-            </div>
+            {Game_begin[0] ? <ShowMove imgshow={Opponent_move[0]} align={'end'} />
+                : <p ref={Oppstatus} className='w-[50%] frisky mox:text-2xl text-4xl text-center'>Waiting for opponent to select..</p>}
+
         </div>
     )
 }
