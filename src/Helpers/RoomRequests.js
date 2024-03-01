@@ -1,4 +1,4 @@
-const host='https://rockservers.vercel.app'
+const host='https://rockserver.adaptable.app'
 
 async function checkforroom(roomid){
     const status = await fetch(host+'/roomvialink',{
