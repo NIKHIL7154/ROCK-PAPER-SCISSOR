@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import GamePage from './GamePage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
@@ -10,6 +10,8 @@ import { Gamestarted } from '../Helpers/Contexts';
 import LoadData from './LoadData';
 
 import FriendPlay from './FriendPlay';
+import Serverconnect from '../Helpers/Socketconfig';
+import { CurrentRoom } from '../Helpers/RuntimeVars';
 
 
 const Bypass = () => {
@@ -17,7 +19,21 @@ const Bypass = () => {
     const [Player_move, setPlayer_move] = useState("Left_Rock");
     const [game, setgame] = useState(false);
     const [Opponent_move, setOpponent_move] = useState("Right_Rock");
-
+    const io = useContext(Serverconnect);
+    useEffect(() => {
+        io.on('connect',()=>{
+            if(CurrentRoom!=='' && io.connected()){
+                io.emit('newroom',CurrentRoom)
+                console.log("Connected with server");
+            }
+        })
+        io.on('disconnect',()=>{
+            if(CurrentRoom!=='' && io.connected()){
+                io.emit('newroom',CurrentRoom)
+                console.log("disconnected from server");
+            }
+        })
+    }, [io]);
     return (
 
         <Gamestarted.Provider value={[Gamebegin, setGamebegin]}>

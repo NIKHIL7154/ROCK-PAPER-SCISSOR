@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Account_img from '../assets/Acoount_profile.png'
-import Pokeball from '../assets/Pokeball.png'
+
 import Serverconnect from '../Helpers/Socketconfig';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { CurrentRoom, GamerId } from '../Helpers/RuntimeVars';
+import { Account_img, Pokeball } from '../Helpers/AssetHelper';
 const Score = () => {
     const io = useContext(Serverconnect);
     const navigate = useNavigate();
