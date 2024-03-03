@@ -22,13 +22,13 @@ const Bypass = () => {
     const io = useContext(Serverconnect);
     useEffect(() => {
         io.on('connect',()=>{
-            if(CurrentRoom!=='' && io.connected()){
+            if(CurrentRoom!==''){
                 io.emit('newroom',CurrentRoom)
                 console.log("Connected with server");
             }
         })
         io.on('disconnect',()=>{
-            if(CurrentRoom!=='' && io.connected()){
+            if(CurrentRoom!==''){
                 io.emit('newroom',CurrentRoom)
                 console.log("disconnected from server");
             }
