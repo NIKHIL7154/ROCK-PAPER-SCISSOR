@@ -14,22 +14,26 @@ import Serverconnect from '../Helpers/Socketconfig';
 import { CurrentRoom } from '../Helpers/RuntimeVars';
 
 
-const Bypass = () => {
+
+const Bypass = (props) => {
     const [Gamebegin, setGamebegin] = useState(false)
     const [Player_move, setPlayer_move] = useState("Left_Rock");
     const [game, setgame] = useState(false);
     const [Opponent_move, setOpponent_move] = useState("Right_Rock");
     const io = useContext(Serverconnect);
+    const {setStatus}=props
     useEffect(() => {
         io.on('connect',()=>{
             if(CurrentRoom!==''){
                 io.emit('newroom',CurrentRoom)
                 console.log("Connected with server");
+                setStatus(false)
             }
         })
         io.on('disconnect',()=>{
             if(CurrentRoom!==''){
                 io.emit('newroom',CurrentRoom)
+                setStatus(true)
                 console.log("disconnected from server");
             }
         })
@@ -43,8 +47,10 @@ const Bypass = () => {
                         <BrowserRouter>
 
                             <Routes>
+
                                 <Route path='/home' element={<Homepage />} />
                                 <Route path='*' element={<LoadData />} />
+
                                 <Route path='/playwithfriend' element={<FriendPlay/>} />
                                 <Route path='/game/:roomid' element={<GamePage />} />
                                 <Route path='/result/:result' element={<GameEnd />} />
