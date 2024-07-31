@@ -7,7 +7,7 @@ import io from 'socket.io-client'
 import App from './App';
 
 
-const soc = io.connect("https://rockserver.adaptable.app");
+const soc = io.connect("http://ec2-13-200-98-123.ap-south-1.compute.amazonaws.com:3000");
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
