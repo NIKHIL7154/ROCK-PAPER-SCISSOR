@@ -1,4 +1,4 @@
-const host='http://ec2-13-200-98-123.ap-south-1.compute.amazonaws.com:3000'
+const host='https://rockserver.adaptable.app'
 
 async function checkforroom(roomid){
     const status = await fetch(host+'/roomvialink',{
