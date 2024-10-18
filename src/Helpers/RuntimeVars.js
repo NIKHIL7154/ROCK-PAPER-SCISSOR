@@ -28,4 +28,7 @@ function ResetRuntime(){
     MainRoomId=''
 }
 
-export {PlayerSelected,OppSelected,setPlayer,setOpp,CurrentRoom,setCurroom,GamerId,setGamerId,MainRoomId,setMainRoomId,ResetRuntime}
+
+const serverHost=process.env.REACT_APP_META_SERVER_URI
+
+export {serverHost,PlayerSelected,OppSelected,setPlayer,setOpp,CurrentRoom,setCurroom,GamerId,setGamerId,MainRoomId,setMainRoomId,ResetRuntime}

@@ -1,4 +1,6 @@
-const host='https://rockserver.adaptable.app'
+import { serverHost } from "./RuntimeVars";
+
+const host=serverHost
 
 async function checkforroom(roomid){
     const status = await fetch(host+'/roomvialink',{
